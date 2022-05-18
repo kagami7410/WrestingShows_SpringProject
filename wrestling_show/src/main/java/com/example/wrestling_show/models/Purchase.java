@@ -35,9 +35,9 @@ public class Purchase {
 
 
 
-    public Purchase(Audience audience) {
+    public Purchase(Audience audience, List<Show> show) {
         this.audience = audience;
-        this.shows = new ArrayList<Show>();
+        this.shows = show;
     }
 
     public Long getId() {

@@ -27,11 +27,11 @@ public class Wrestler {
     public Wrestler() {
     }
 
-    public Wrestler(String name, String signature_move, int salary) {
+    public Wrestler(String name, String signature_move, int salary, List<Show> shows) {
         this.name = name;
         this.signature_move = signature_move;
         this.salary = salary;
-        this.shows = new ArrayList<Show>();
+        this.shows = shows;
 
     }
 
