@@ -1,6 +1,8 @@
 package com.example.wrestling_show.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "audiences")
@@ -15,7 +17,8 @@ public class Audience {
     @Column
     private String emailAddress;
 
-    @OneToMany
+    @OneToMany(mappedBy = "audience")
+    List<Show> shows;
 
 
     public Audience() {
@@ -24,6 +27,7 @@ public class Audience {
     public Audience(String name, String emailAddress) {
         this.name = name;
         this.emailAddress = emailAddress;
+        this.shows = new ArrayList<>();
     }
 
     public Long getId() {
@@ -48,5 +52,13 @@ public class Audience {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public void addShow(Show show){
+        shows.add(show);
+    }
+
+    public boolean removeShow(Show show){
+       return shows.remove(show);
     }
 }
