@@ -22,8 +22,16 @@ public class Purchase {
     public Purchase() {
     }
 
-    @ManyToMany
+    @ManyToMany()
+    @JoinTable(
+            name = "purchases_shows",
+            joinColumns = {@JoinColumn(name = "purchase_id", nullable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "shows_id", nullable = false)}
+
+            )
+    @JsonIgnoreProperties(value = {"purchases"})
     List<Show> shows;
+
 
 
 

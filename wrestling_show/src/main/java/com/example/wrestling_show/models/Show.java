@@ -1,5 +1,6 @@
 package com.example.wrestling_show.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.catalina.LifecycleState;
 
 import javax.persistence.*;
@@ -22,11 +23,21 @@ public class Show {
     @Column
     private int price;
 
-    @ManyToMany
-    List<Wrestler> wrestlers;
+    @ManyToMany(mappedBy = "shows")
+    @JsonIgnoreProperties(value ={"shows"})
+    List<Purchase> purchases;
 
     @ManyToMany
-    List<Purchase> purchases;
+            @JoinTable(
+                    name = "shows_wrestler",
+                    joinColumns = {@JoinColumn(name = "show_id", nullable = false)},
+                    inverseJoinColumns = {@JoinColumn(name = "wrestler_id", nullable = false)}
+            )
+    @JsonIgnoreProperties(value = {"wrestlers"})
+    List<Wrestler> wrestlers;
+
+
+
 
     public Show() {
     }

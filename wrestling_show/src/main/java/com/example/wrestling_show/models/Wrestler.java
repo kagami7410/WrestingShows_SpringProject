@@ -1,5 +1,7 @@
 package com.example.wrestling_show.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,8 @@ public class Wrestler {
     @Column
     private int salary;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "shows")
+    @JsonIgnoreProperties(value = {"shows"})
     List<Show> shows;
 
     public Wrestler() {
