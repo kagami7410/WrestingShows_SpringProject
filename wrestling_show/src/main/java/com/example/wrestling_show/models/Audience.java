@@ -1,5 +1,7 @@
 package com.example.wrestling_show.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +19,14 @@ public class Audience {
     @Column
     private String emailAddress;
 
-    @OneToMany(mappedBy = "audience")
-    List<Show> shows;
+    @ManyToMany
+        @JoinTable(
+                name = "audiences_purchases",
+                joinColumns = {@JoinColumn(name = "audience_id")},
+                inverseJoinColumns =  {@JoinColumn(name = "show_id")}
+        )
+    @JsonIgnoreProperties({"audiences"})
+    private List<Show> shows;
 
 
     public Audience() {
@@ -27,7 +35,7 @@ public class Audience {
     public Audience(String name, String emailAddress) {
         this.name = name;
         this.emailAddress = emailAddress;
-        this.shows = new ArrayList<>();
+        this.shows = new ArrayList<Show>();
     }
 
     public Long getId() {
@@ -54,11 +62,12 @@ public class Audience {
         this.emailAddress = emailAddress;
     }
 
-    public void addShow(Show show){
-        shows.add(show);
+    public List<Show> getShows() {
+        return shows;
     }
 
-    public boolean removeShow(Show show){
-       return shows.remove(show);
+    public void setShows(List<Show> shows) {
+        this.shows = shows;
     }
+
 }

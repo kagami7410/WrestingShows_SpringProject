@@ -23,18 +23,24 @@ public class Show {
     @Column
     private int price;
 
-    @ManyToMany(mappedBy = "shows")
-    @JsonIgnoreProperties(value ={"shows"})
-    List<Purchase> purchases;
-
     @ManyToMany
-            @JoinTable(
-                    name = "shows_wrestler",
-                    joinColumns = {@JoinColumn(name = "show_id", nullable = false)},
-                    inverseJoinColumns = {@JoinColumn(name = "wrestler_id", nullable = false)}
-            )
-    @JsonIgnoreProperties(value = {"wrestlers"})
-    List<Wrestler> wrestlers;
+    @JoinTable(
+            name = "audiences_purchases",
+            joinColumns = {@JoinColumn(name = "show_id")},
+            inverseJoinColumns = {@JoinColumn(name = "audience_id")}
+    )
+    @JsonIgnoreProperties({"shows"})
+    private List<Audience> audiences;
+
+
+//    @ManyToMany
+//            @JoinTable(
+//                    name = "shows_wrestler",
+//                    joinColumns = {@JoinColumn(name = "show_id", nullable = false)},
+//                    inverseJoinColumns = {@JoinColumn(name = "wrestler_id", nullable = false)}
+//            )
+//    @JsonIgnoreProperties(value = {"wrestlers"})
+//    private List<Wrestler> wrestlers;
 
 
 
@@ -42,12 +48,14 @@ public class Show {
     public Show() {
     }
 
+
+
     public Show(String name, String location, int price) {
         this.name = name;
         this.location = location;
         this.price = price;
-        this.purchases = new ArrayList<Purchase>();
-        this.wrestlers = new ArrayList<Wrestler>();
+//        this.wrestlers = new ArrayList<Wrestler>();
+        this.audiences = new ArrayList<Audience>();
     }
 
     public Long getId() {
@@ -82,34 +90,35 @@ public class Show {
         this.price = price;
     }
 
-    public List<Wrestler> getWrestlers() {
-        return wrestlers;
+//    public List<Wrestler> getWrestlers() {
+//        return wrestlers;
+//    }
+//
+//    public void setWrestlers(List<Wrestler> wrestlers) {
+//        this.wrestlers = wrestlers;
+//    }
+
+
+//    public void addWrestler(Wrestler wrestler){
+//        wrestlers.add(wrestler);
+//    }
+//
+//    public boolean removeWrestler(Wrestler wrestler){
+//        return wrestlers.remove(wrestler);
+//    }
+
+    public List<Audience> getAudiences() {
+        return audiences;
     }
 
-    public void setWrestlers(List<Wrestler> wrestlers) {
-        this.wrestlers = wrestlers;
+    public void setAudiences(List<Audience> audiences) {
+        this.audiences = audiences;
     }
 
-    public List<Purchase> getPurchases() {
-        return purchases;
+    public void addAudience(Audience audience){
+        this.audiences.add(audience);
     }
 
-    public void setPurchases(List<Purchase> purchases) {
-        this.purchases = purchases;
-    }
 
-    public void addWrestler(Wrestler wrestler){
-        wrestlers.add(wrestler);
-    }
 
-    public boolean removeWrestler(Wrestler wrestler){
-        return wrestlers.remove(wrestler);
-    }
-    public void addPurchase(Purchase purchase){
-        purchases.add(purchase);
-    }
-
-    public boolean removeWrestler(Purchase purchase){
-        return purchases.remove(purchase);
-    }
 }
